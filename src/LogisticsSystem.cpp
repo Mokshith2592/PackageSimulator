@@ -40,5 +40,7 @@ void LogisticsSystem::addCustomer() {
 }
 
 void LogisticsSystem::displayCustomers() {
-    
+    for(auto &c : customers) {
+        cout << c.getCustomerId() << "  " << c.getName();
+    }
 }
