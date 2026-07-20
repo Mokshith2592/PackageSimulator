@@ -15,6 +15,8 @@ class LogisticsSystem {
         void run();
 
         void addCustomer();
+        void displayCustomers();
+        
         void addPackage();
         void addTruck();
         void addWarehouse();
