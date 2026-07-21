@@ -18,12 +18,15 @@ void LogisticsSystem::run() {
         2. Exit
     */
 
-    int menuNumber;
-    cout << "Enter a menu number: ";
-    cin >> menuNumber;
+    while(true) {
+        int menuNumber;
+        cout << "Enter a menu number: ";
+        cin >> menuNumber;
 
-    if(menuNumber == 1) addCustomer();
-    else exit(0);
+        if(menuNumber == 1) addCustomer();
+        else if(menuNumber == 2) displayCustomers();
+        else exit(0);
+    }
 }
 
 void LogisticsSystem::addCustomer() {
@@ -32,7 +35,16 @@ void LogisticsSystem::addCustomer() {
     
     for(auto &c : customers) {
         if(c.getCustomerId() == customer.getCustomerId()){
-            cerr << "Customer with this Id already exsits";
+            cerr << "Customer with this Id already exsits\n";
+            return;
+        }
+    }
+
+    string phoneNum = customer.getPhoneNumber();
+    for(char ch : phoneNum) {
+        if(isalpha(ch)) {
+            cerr << "Customer phone number cannot have letters\n";
+            return;
         }
     }
     customers.push_back(customer);
@@ -41,6 +53,6 @@ void LogisticsSystem::addCustomer() {
 
 void LogisticsSystem::displayCustomers() {
     for(auto &c : customers) {
-        cout << c.getCustomerId() << "  " << c.getName();
+        cout << c.getCustomerId() << "  " << c.getName() << "\n";
     }
 }
