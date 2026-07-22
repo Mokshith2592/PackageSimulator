@@ -9,15 +9,6 @@ LogisticsSystem::LogisticsSystem() {
 }
 
 void LogisticsSystem::run() {
-    /*
-        ==============================
-        Package Delivery Simulator
-        ==============================
-
-        1. Add Customer
-        2. Exit
-    */
-
     while(true) {
         int menuNumber;
         cout << "Enter a menu number: ";
@@ -25,19 +16,27 @@ void LogisticsSystem::run() {
 
         if(menuNumber == 1) addCustomer();
         else if(menuNumber == 2) displayCustomers();
+        else if(menuNumber == 3) addPackage();
+        else if(menuNumber == 4) displayPackage();
         else exit(0);
     }
+}
+
+bool LogisticsSystem::customerExists(const int &customerId) {
+    for(auto &c : customers) {
+        if(c.getCustomerId() == customerId) return true;
+    }
+
+    return false;
 }
 
 void LogisticsSystem::addCustomer() {
     Customer customer;
     customer.input();
     
-    for(auto &c : customers) {
-        if(c.getCustomerId() == customer.getCustomerId()){
-            cerr << "Customer with this Id already exsits\n";
-            return;
-        }
+    if(customerExists(customer.getCustomerId())) {
+        cerr << "Customer with this Id already exsits\n";
+        return;
     }
 
     string phoneNum = customer.getPhoneNumber();
@@ -53,6 +52,38 @@ void LogisticsSystem::addCustomer() {
 
 void LogisticsSystem::displayCustomers() {
     for(auto &c : customers) {
-        cout << c.getCustomerId() << "  " << c.getName() << "\n";
+        c.display();
+    }
+}
+
+bool LogisticsSystem::packageExists(const int &packageId) {
+    for(const auto &p : packages) {
+        if(p.getPackageId() == packageId) return true;
+    }
+
+    return false;
+}
+
+void LogisticsSystem::addPackage() {
+    Package package;
+    package.input();
+
+    if(packageExists(package.getPackageId())) {
+        cerr << "Package with this Id already exsits\n";
+        return;
+    }
+
+    if(!customerExists(package.getCustomerId())) {
+        cerr << "Customer with this Id doesnot exsits\n";
+        return;
+    }
+    
+    packages.push_back(package);
+    cout << "Package Added Successfully\n";
+}
+
+void LogisticsSystem::displayPackage() {
+    for(auto &p : packages) {
+        p.display();
     }
 }

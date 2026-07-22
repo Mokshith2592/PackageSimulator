@@ -1,3 +1,6 @@
+#ifndef LOGISTICSSYSTEM_H
+#define LOGISTICSSYSTEM_H
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -6,9 +9,6 @@ using namespace std;
 #include <Truck.h>
 #include <Warehouse.h>
 
-#ifndef LOGISTICSSYSTEM_H
-#define LOGISTICSSYSTEM_H
-
 class LogisticsSystem {
     public:
         LogisticsSystem();
@@ -16,8 +16,12 @@ class LogisticsSystem {
 
         void addCustomer();
         void displayCustomers();
-        
+        bool customerExists(const int &customerId);
+
         void addPackage();
+        void displayPackage();
+        bool packageExists(const int &packageId);
+
         void addTruck();
         void addWarehouse();
 
