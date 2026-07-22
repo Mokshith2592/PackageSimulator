@@ -1,11 +1,12 @@
 #include <bits/stdc++.h>
 #include "../include/LogisticsSystem.h"
 #include "../include/Customer.h"
+#include "../include/Package.h"
+#include "../include/Warehouse.h"
 
 using namespace std;
 
 LogisticsSystem::LogisticsSystem() {
-    
 }
 
 void LogisticsSystem::run() {
@@ -18,6 +19,8 @@ void LogisticsSystem::run() {
         else if(menuNumber == 2) displayCustomers();
         else if(menuNumber == 3) addPackage();
         else if(menuNumber == 4) displayPackage();
+        else if(menuNumber == 5) addWarehouse();
+        else if(menuNumber == 6) displayWarehouses();
         else exit(0);
     }
 }
@@ -85,5 +88,32 @@ void LogisticsSystem::addPackage() {
 void LogisticsSystem::displayPackage() {
     for(auto &p : packages) {
         p.display();
+    }
+}
+
+bool LogisticSystem::warehouseExists(int warehouseId) {
+    for(auto w : warehouses) {
+        if(w.getWarehouseId() == warehouseId) return true;
+    }
+
+    return false;
+}
+
+void LogisticSystem::addWarehouse() {
+    Warehouse warehouse;
+    warehouse.input();
+
+    if(warehouseExists(warehouse.getWarehouseId())) {
+        cerr << "Warehouse already exists\n";
+        return;
+    }
+
+    warehouses.push_back(warehouse);
+    cout << "Warehouse added successfully\n";
+}
+
+void LogisticSystem::displayWarehouses() {
+    for(auto &w : warehouses) {
+        w.display();
     }
 }

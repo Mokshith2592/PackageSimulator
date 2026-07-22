@@ -22,8 +22,11 @@ class LogisticsSystem {
         void displayPackage();
         bool packageExists(const int &packageId);
 
-        void addTruck();
         void addWarehouse();
+        void displayWarehouses();
+        bool warehouseExists(int warehouseId);
+
+        void addTruck();
 
     private:
         vector<Customer> customers;
