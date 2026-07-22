@@ -7,14 +7,12 @@ Warehouse::Warehouse() {
     warehouseId = -1;
     location = "";
     capacity = 0;
-    currPackages = 0;
 }
 
-Warehouse::Warehouse(int warehouseId ,string location ,int capacity ,int currPackages) {
+Warehouse::Warehouse(int warehouseId ,string location ,int capacity) {
     this->warehouseId = warehouseId;
     this->location = location;
     this->capacity = capacity;
-    this->currPackages = currPackages;
 }
 
 void Warehouse::input() {
@@ -26,16 +24,32 @@ void Warehouse::input() {
 
     cout << "Enter warehouse capacity: ";
     cin >> capacity;
-
-    cout << "Enter current number of packages: ";
-    cin >> currPackages;
 }
 
 void Warehouse::display() {
     cout << "Warehouse ID    : " << warehouseId << endl;
     cout << "Location        : " << location << endl;
     cout << "Capacity        : " << capacity << endl;
-    cout << "Current Packages: " << currPackages << endl;
+}
+
+void Warehouse::addPackageToWarehouse(int pId) {
+    if(packageIds.count(pId)) {
+        cerr << "Package already exists to add\n";
+        return;
+    }
+    packageIds.insert(pId);
+}
+
+void Warehouse::removePackageFromWarehouse(int pId) {
+    if(!packageIds.count(pId)) {
+        cerr << "Package doesnot exists to remove\n";
+        return;
+    }
+    packageIds.erase(pId);
+}
+
+bool Warehouse::containsPackageInWarehouse(int pId) {
+    return packageIds.count(pId) == 1;
 }
 
 int Warehouse::getWarehouseId() const {
@@ -48,10 +62,6 @@ string Warehouse::getLocation() const {
 
 int Warehouse::getCapacity() const {
     return capacity;
-}
-
-int Warehouse::getCurrPackages() const {
-    return currPackages;
 }
 
 unordered_set<int> Warehouse::getPackageIds() const {
@@ -68,10 +78,6 @@ void Warehouse::setLocation(const string& location) {
 
 void Warehouse::setCapacity(int capacity) {
     this->capacity = capacity;
-}
-
-void Warehouse::setCurrPackages(int currPackages) {
-    this->currPackages = currPackages;
 }
 
 void Warehouse::setPackageIds(const unordered_set<int>& packageIds) {

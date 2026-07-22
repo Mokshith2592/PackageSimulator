@@ -19,13 +19,16 @@ class LogisticsSystem {
         bool customerExists(const int &customerId);
 
         void addPackage();
-        void displayPackage();
+        void displayPackages();
         bool packageExists(const int &packageId);
 
         void addWarehouse();
         void displayWarehouses();
         bool warehouseExists(int warehouseId);
 
+        void assignPackage();
+        Warehouse* getWarehouseObj(int wId);
+        Package* getPackageObj(int pId);
         void addTruck();
 
     private:
