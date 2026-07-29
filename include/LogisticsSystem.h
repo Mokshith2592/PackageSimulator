@@ -29,7 +29,11 @@ class LogisticsSystem {
         void assignPackage();
         Warehouse* getWarehouseObj(int wId);
         Package* getPackageObj(int pId);
+        
         void addTruck();
+        bool truckExists(int truckId);
+        Truck* getTruckObj(int tId);
+        void loadPackageToTruck();
 
     private:
         vector<Customer> customers;

@@ -22,6 +22,8 @@ void LogisticsSystem::run() {
         else if(menuNumber == 5) addWarehouse();
         else if(menuNumber == 6) displayWarehouses();
         else if(menuNumber == 7) assignPackage();
+        else if(menuNumber == 8) addTruck();
+        else if(menuNumber == 9) loadPackageToTruck();
         else exit(0);
     }
 }
@@ -156,11 +158,72 @@ void LogisticsSystem::assignPackage() {
     }   
 
     Warehouse* warehouse = getWarehouseObj(wId);
-    warehouse->addPackageToWarehouse(pId);
 
+    int currCapacity = warehouse->getCapacity();
+    if(currCapacity > 10) {
+        cerr << "The warehouse is Full\n\n";
+        return;
+    }
+    warehouse->addPackageToWarehouse(pId);
+    
     Package* package = getPackageObj(pId);
     if(package->getCurrWareHouse() == -1)  package->setCurrWareHouse(wId);
     else {
         cerr << "A package is existing in warehouse " << package->getCurrWareHouse();
     }
+}
+
+bool LogisticsSystem::truckExists(int truckId) {
+    for (const auto& truck : trucks) {
+        if (truck.getTruckId() == truckId) return true;
+    }
+
+    return false;
+}
+
+Truck* LogisticsSystem::getTruckObj(int tId) {
+    for (auto& truck : trucks) {
+        if (truck.getTruckId() == tId) return &truck;
+    }
+    return nullptr;
+}
+
+void LogisticsSystem::loadPackageToTruck() {
+    int pId;
+    cout << "Enter package id: ";
+    cin >> pId;
+
+    if (!packageExists(pId)) {
+        cerr << "Package doesnot exists\n";
+        return;
+    }
+
+    int tId;
+    cout << "Enter truck id: ";
+    cin >> tId;
+
+    if (!truckExists(tId)) {
+        cerr << "Truck doesnot exists\n";
+        return;
+    }
+
+    Truck* truck = getTruckObj(tId);
+    if (truck->containsPackageInTruck(pId)) {
+        cerr << "Package is already loaded in this truck\n";
+        return;
+    }
+
+    if (static_cast<int>(truck->getPackagesInTruck().size()) >= truck->getMaxCapacity()) {
+        cerr << "The truck is Full\n\n";
+        return;
+    }
+
+    Package* package = getPackageObj(pId);
+    if (package->getAssignedTruck() != -1) {
+        cerr << "A package is already assigned to truck " << package->getAssignedTruck() << "\n";
+        return;
+    }
+
+    truck->addPackageToTruck(pId);
+    package->setAssignedTruck(tId);
 }
