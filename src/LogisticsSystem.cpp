@@ -159,8 +159,8 @@ void LogisticsSystem::assignPackage() {
     warehouse->addPackageToWarehouse(pId);
 
     Package* package = getPackageObj(pId);
-    if(package->getCurrWareHouse == -1)  package->setCurrWareHouse(wId);
+    if(package->getCurrWareHouse() == -1)  package->setCurrWareHouse(wId);
     else {
-        cerr << "A package is existing in warehouse " << package->getCurrWareHouse;
+        cerr << "A package is existing in warehouse " << package->getCurrWareHouse();
     }
 }
